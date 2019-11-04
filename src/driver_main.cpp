@@ -23,12 +23,12 @@
  *     http://www.rosbots.com
  */
 
-#include <memory>
+//#include <memory>
 
-#include "controller/supervisor.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "controller/supervisor.hpp"
 
-using namespace rosbots;
+using namespace _rosbots_ns;
 
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);

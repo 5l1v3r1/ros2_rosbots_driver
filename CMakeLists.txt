@@ -27,7 +27,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp)
 find_package(std_msgs)
 
-add_executable(driver src/driver_main.cpp)
+add_executable(driver src/driver_main.cpp src/controller/supervisor.cpp)
 ament_target_dependencies(driver rclcpp std_msgs)
 
 install(TARGETS
