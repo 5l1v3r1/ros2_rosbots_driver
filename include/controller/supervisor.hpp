@@ -32,6 +32,7 @@
 #include "std_msgs/msg/string.hpp"
 
 #include "controller/controller.hpp"
+#include "controller/robot.hpp"
 
 namespace _rosbots_ns {
 
@@ -53,6 +54,8 @@ private:
   std::map<unsigned int, std::shared_ptr<Controller>> controllers_;
   int current_state_;
   std::shared_ptr<Controller> current_controller_;
+
+  std::shared_ptr<Robot> robot_;
 };
 
 } // namespace _rosbots_ns

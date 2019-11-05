@@ -23,31 +23,17 @@
  *     http://www.rosbots.com
  */
 
-#ifndef __ROSBOTS_RC_TELEOP_HPP
-#define __ROSBOTS_RC_TELEOP_HPP
-#include <memory>
-
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist.hpp"
 
-#include "controller/controller.hpp"
+#include "controller/robot.hpp"
 
-namespace _rosbots_ns {
+using namespace _rosbots_ns;
 
-class RCTeleop : public Controller {
-public:
-  RCTeleop(rclcpp::Node* parent_ros_node);
+Robot::Robot(rclcpp::Node* parent_ros_node) : p_parent_ros_node_(parent_ros_node) {
+  rclcpp::Node *pnode = this->p_parent_ros_node_;
+  RCLCPP_INFO(pnode->get_logger(),
+              "Robot: Init: node name %s, namespace %s...", pnode->get_name(),
+              pnode->get_namespace());
 
-  ControllerOutput execute();
-private:
-  double v_;
-  double w_;
-
-  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
-
-  void twist_cb(const geometry_msgs::msg::Twist::SharedPtr msg);
-};
-
-} // namespace _rosbots_ns
-
-#endif // __ROSBOTS_RC_TELEOP_HPP
+   
+}

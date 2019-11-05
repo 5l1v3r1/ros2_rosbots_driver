@@ -32,6 +32,7 @@
 #include "controller/controller.hpp"
 #include "controller/rc_teleop.hpp"
 #include "controller/supervisor.hpp"
+#include "controller/robot.hpp"
 
 using namespace _rosbots_ns;
 using namespace std::chrono_literals;
@@ -49,6 +50,9 @@ Supervisor::Supervisor() : Node("rosbots_supervisor") {
   // Initial state is RC Teleop
   this->current_state_ = Controller::type_rc_teleop;
   this->current_controller_ = this->controllers_[this->current_state_];
+
+  // Initialize robot
+  this->robot_ = std::make_shared<Robot>(this); 
 
   // Create execution timer
   this->timer_ =

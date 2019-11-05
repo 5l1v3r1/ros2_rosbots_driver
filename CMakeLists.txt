@@ -32,6 +32,7 @@ add_executable(driver
   src/driver_main.cpp
   src/controller/supervisor.cpp
   src/controller/rc_teleop.cpp
+  src/controller/robot.cpp
   )
 ament_target_dependencies(driver
   rclcpp

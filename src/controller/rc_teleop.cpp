@@ -36,11 +36,11 @@ RCTeleop::RCTeleop(rclcpp::Node *parent_ros_node)
     : Controller(parent_ros_node), v_(0.0), w_(0.0) {
   rclcpp::Node *pnode = this->p_parent_ros_node_;
   RCLCPP_INFO(pnode->get_logger(),
-              "RCTeleop: Init node name %s, namespace %s...", pnode->get_name(),
+              "RCTeleop: Init: node name %s, namespace %s...", pnode->get_name(),
               pnode->get_namespace());
 
   // Subscribe to twist topic
-  std::string topic_name = "topic";
+  std::string topic_name = "cmd_vel";
   this->twist_sub_ = pnode->create_subscription<geometry_msgs::msg::Twist>(
       topic_name, 10,
       std::bind(&RCTeleop::twist_cb, this, std::placeholders::_1));

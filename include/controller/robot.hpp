@@ -23,31 +23,31 @@
  *     http://www.rosbots.com
  */
 
-#ifndef __ROSBOTS_RC_TELEOP_HPP
-#define __ROSBOTS_RC_TELEOP_HPP
-#include <memory>
+#ifndef _ROSBOTS_ROBOT_HPP
+#define _ROSBOTS_ROBOT_HPP
 
 #include "rclcpp/rclcpp.hpp"
-#include "geometry_msgs/msg/twist.hpp"
-
-#include "controller/controller.hpp"
+#include "std_msgs/msg/float32.hpp"
 
 namespace _rosbots_ns {
 
-class RCTeleop : public Controller {
+class Robot {
+
 public:
-  RCTeleop(rclcpp::Node* parent_ros_node);
+  Robot(rclcpp::Node* parent_ros_node);
 
-  ControllerOutput execute();
 private:
-  double v_;
-  double w_;
+  rclcpp::Node* p_parent_ros_node_;
+  double wheelbase_;
+  double wheel_radius_;
 
-  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
-
-  void twist_cb(const geometry_msgs::msg::Twist::SharedPtr msg);
+  double wheel_speed_min;
+  double wheel_speed_mid;
+  double wheel_speed_max;
+  std_msgs::msg::Float32 cur_wheel_power_right;
+  std_msgs::msg::Float32 cur_wheel_power_left;
 };
 
 } // namespace _rosbots_ns
 
-#endif // __ROSBOTS_RC_TELEOP_HPP
+#endif // _ROSBOTS_ROBOT_HPP
