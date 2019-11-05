@@ -54,6 +54,7 @@ Supervisor::Supervisor() : Node("rosbots_supervisor") {
 void Supervisor::execute_cb() const {
   RCLCPP_INFO(this->get_logger(), "Supervisor executing...");
 
+  // Get commands in unicycle model
   auto ctrl_output = this->current_controller_->execute();
   RCLCPP_INFO(this->get_logger(), "Control Output %f, %f", ctrl_output.v, ctrl_output.w);
 }

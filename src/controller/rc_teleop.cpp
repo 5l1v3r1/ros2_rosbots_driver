@@ -23,24 +23,14 @@
  *     http://www.rosbots.com
  */
 
-#ifndef __ROSBOTS_CONTROLLER_HPP
-#define __ROSBOTS_CONTROLLER_HPP
 #include <memory>
 
-namespace _rosbots_ns {
+#include "geometry_msgs/msg/twist.hpp"
+#include "controller/rc_teleop.hpp"
 
-struct ControllerOutput {
-  float v;
-  float w;
-};
+using namespace _rosbots_ns;
 
-class Controller {
-public:
-  static const unsigned int type_rc_teleop = 1;
-
-  virtual ControllerOutput execute() = 0;
-};
-
-} // namespace _rosbots_ns
-
-#endif // __ROSBOTS_CONTROLLER_HPP
+ControllerOutput RCTeleop::execute() {
+  ControllerOutput output = {3.0, 6.0};
+  return output;
+}
