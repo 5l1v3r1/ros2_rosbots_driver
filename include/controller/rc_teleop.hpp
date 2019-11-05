@@ -28,7 +28,7 @@
 #include <memory>
 
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
+#include "geometry_msgs/msg/twist.hpp"
 
 #include "controller/controller.hpp"
 
@@ -36,9 +36,16 @@ namespace _rosbots_ns {
 
 class RCTeleop : public Controller {
 public:
-  RCTeleop() {}
+  RCTeleop(rclcpp::Node* parent_ros_node);
 
   virtual ControllerOutput execute();
+private:
+  double v_;
+  double w_;
+
+  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
+
+  void twist_cb(const geometry_msgs::msg::Twist::SharedPtr msg);
 };
 
 } // namespace _rosbots_ns

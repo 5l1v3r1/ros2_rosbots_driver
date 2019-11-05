@@ -27,18 +27,26 @@
 #define __ROSBOTS_CONTROLLER_HPP
 #include <memory>
 
+#include "rclcpp/rclcpp.hpp"
+
 namespace _rosbots_ns {
 
 struct ControllerOutput {
-  float v;
-  float w;
+  double v;
+  double w;
 };
 
 class Controller {
 public:
   static const unsigned int type_rc_teleop = 1;
 
+  Controller(rclcpp::Node *parent_ros_node)
+      : p_parent_ros_node_(parent_ros_node) {}
+
   virtual ControllerOutput execute() = 0;
+
+protected:
+  rclcpp::Node *p_parent_ros_node_;
 };
 
 } // namespace _rosbots_ns
