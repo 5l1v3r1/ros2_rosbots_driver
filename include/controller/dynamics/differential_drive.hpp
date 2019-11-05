@@ -23,44 +23,31 @@
  *     http://www.rosbots.com
  */
 
-#ifndef _ROSBOTS_ROBOT_HPP
-#define _ROSBOTS_ROBOT_HPP
+#ifndef _ROSBOTS_DIFFERENTIAL_DRIVE_HPP
+#define _ROSBOTS_DIFFERENTIAL_DRIVE_HPP
 
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/float32.hpp"
 
 namespace _rosbots_ns {
 
-class Robot {
+struct WheelVelocity {
+  double vl;
+  double vr;
+};
 
+class DifferentialDrive {
 public:
-  Robot(rclcpp::Node* parent_ros_node);
+  DifferentialDrive(rclcpp::Node *parent_ros_node, double wheelbase,
+                    double wheel_radius);
 
-  void set_wheel_speed(double vr, double vl);
-
-  double get_wheelbase() {return this->wheelbase_;}
-  double get_wheel_radius() {return this->wheel_radius_;}
+  WheelVelocity uni_to_diff(double v, double w) const;
 
 private:
   rclcpp::Node* p_parent_ros_node_;
   double wheelbase_;
   double wheel_radius_;
-
-  double wheel_speed_min_;
-  double wheel_speed_mid_;
-  double wheel_speed_max_;
-  double wheel_speed_min_power_;
-  double wheel_speed_mid_power_;
-  double wheel_speed_max_power_;
-  std_msgs::msg::Float32 cur_wheel_power_right_;
-  std_msgs::msg::Float32 cur_wheel_power_left_;
-
-  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr pub_power_right_;
-  rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr pub_power_left_;
-
-  double velocity_to_power(double v);
 };
 
 } // namespace _rosbots_ns
 
-#endif // _ROSBOTS_ROBOT_HPP
+#endif // _ROSBOTS_DIFFERENTIAL_DRIVE_HPP

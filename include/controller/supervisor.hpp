@@ -33,6 +33,7 @@
 
 #include "controller/controller.hpp"
 #include "controller/robot.hpp"
+#include "controller/dynamics/differential_drive.hpp"
 
 namespace _rosbots_ns {
 
@@ -56,6 +57,8 @@ private:
   std::shared_ptr<Controller> current_controller_;
 
   std::shared_ptr<Robot> robot_;
+
+  std::shared_ptr<DifferentialDrive> dd_;
 };
 
 } // namespace _rosbots_ns

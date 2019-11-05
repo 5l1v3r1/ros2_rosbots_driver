@@ -31,8 +31,8 @@
 
 #include "controller/controller.hpp"
 #include "controller/rc_teleop.hpp"
-#include "controller/supervisor.hpp"
 #include "controller/robot.hpp"
+#include "controller/supervisor.hpp"
 
 using namespace _rosbots_ns;
 using namespace std::chrono_literals;
@@ -41,8 +41,7 @@ const unsigned int Controller::type_rc_teleop;
 
 Supervisor::Supervisor() : Node("rosbots_supervisor") {
   // Create controllers and initialize
-  auto p_rcteleop_controller =
-      std::make_shared<RCTeleop>(this);
+  auto p_rcteleop_controller = std::make_shared<RCTeleop>(this);
   this->controllers_.insert(
       std::pair<unsigned int, std::shared_ptr<Controller>>(
           Controller::type_rc_teleop, p_rcteleop_controller));
@@ -52,18 +51,27 @@ Supervisor::Supervisor() : Node("rosbots_supervisor") {
   this->current_controller_ = this->controllers_[this->current_state_];
 
   // Initialize robot
-  this->robot_ = std::make_shared<Robot>(this); 
+  this->robot_ = std::make_shared<Robot>(this);
 
+  // Initialize differential drive dynamics
+  this->dd_ = std::make_shared<DifferentialDrive>(
+      this, this->robot_->get_wheelbase(), this->robot_->get_wheel_radius());
+ 
   // Create execution timer
   this->timer_ =
       this->create_wall_timer(500ms, std::bind(&Supervisor::execute_cb, this));
 }
 
 void Supervisor::execute_cb() const {
-  RCLCPP_INFO(this->get_logger(), "Supervisor executing...");
+  // RCLCPP_INFO(this->get_logger(), "Supervisor executing...");
 
   // Get commands in unicycle model
   auto ctrl_output = this->current_controller_->execute();
-  RCLCPP_INFO(this->get_logger(), "Control Output %f, %f", ctrl_output.v,
-              ctrl_output.w);
+  // RCLCPP_INFO(this->get_logger(), "Control Output %f, %f", ctrl_output.v,
+  //            ctrl_output.w);
+
+  auto diff_output = this->dd_->uni_to_diff(ctrl_output.v, ctrl_output.w);
+
+  // Set the wheel speeds
+  this->robot_->set_wheel_speed(diff_output.vr, diff_output.vl);
 }

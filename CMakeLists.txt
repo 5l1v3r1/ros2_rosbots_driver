@@ -33,6 +33,7 @@ add_executable(driver
   src/controller/supervisor.cpp
   src/controller/rc_teleop.cpp
   src/controller/robot.cpp
+  src/controller/dynamics/differential_drive.cpp
   )
 ament_target_dependencies(driver
   rclcpp
