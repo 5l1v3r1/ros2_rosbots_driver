@@ -77,6 +77,7 @@ Robot::Robot(rclcpp::Node *parent_ros_node)
 }
 
 double Robot::velocity_to_power(double v) {
+  // Input v is in radians per second
   auto av = fabs(v);
 
   // If velocity is below minimum velocity turnable by PWM, then
@@ -110,6 +111,7 @@ double Robot::velocity_to_power(double v) {
 }
 
 void Robot::set_wheel_speed(double vr, double vl) {
+  // The inputs vr and vl are in radians per second, as is wheel_speed_xxx_
   // Clamp the wheel speeds to actuator limits
   vr = std::max(std::min(vr, this->wheel_speed_max_),
                 this->wheel_speed_max_ * -1.0);

@@ -40,8 +40,8 @@ public:
 
   ControllerOutput execute();
 private:
-  double v_;
-  double w_;
+  double v_;  // Meters per second
+  double w_;  // Radians per second
 
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
 

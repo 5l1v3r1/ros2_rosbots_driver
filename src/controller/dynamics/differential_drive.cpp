@@ -37,7 +37,7 @@ DifferentialDrive::DifferentialDrive(rclcpp::Node *parent_ros_node,
 }
 
 WheelVelocity DifferentialDrive::uni_to_diff(double v, double w) const {
-  // Return mm per sec wheel velocities
+  // Return radians per sec wheel velocities
 
   // In meters per radian
   double L = this->wheelbase_;
@@ -51,7 +51,7 @@ WheelVelocity DifferentialDrive::uni_to_diff(double v, double w) const {
   double vr = ((2.0 * v) + (w * L)) / (2.0 * R);
   double vl = ((2.0 * v) + (-1.0 * w * L)) / (2.0 * R);
 
-  // In m per sec
+  // In radians per sec
   WheelVelocity wv = {vl, vr};
   return wv;
 }

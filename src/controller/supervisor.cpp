@@ -67,11 +67,13 @@ void Supervisor::execute_cb() const {
 
   // Get commands in unicycle model
   auto ctrl_output = this->current_controller_->execute();
-  // RCLCPP_INFO(this->get_logger(), "Control Output %f, %f", ctrl_output.v,
+  // RCLCPP_INFO(this->get_logger(), "Control Output %f meters per second, %f radians per second", ctrl_output.v,
   //            ctrl_output.w);
 
+  // Inputs are in meters per second and radians per second.
+  // Get wheel velocities in radians per second
   auto diff_output = this->dd_->uni_to_diff(ctrl_output.v, ctrl_output.w);
 
-  // Set the wheel speeds
+  // Set the wheel speeds - vr and vl are in radians per second
   this->robot_->set_wheel_speed(diff_output.vr, diff_output.vl);
 }

@@ -32,8 +32,8 @@
 namespace _rosbots_ns {
 
 struct ControllerOutput {
-  double v;
-  double w;
+  double v;  // Meters per second
+  double w;  // Radians per second
 };
 
 class Controller {

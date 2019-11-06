@@ -31,8 +31,8 @@
 namespace _rosbots_ns {
 
 struct WheelVelocity {
-  double vl;
-  double vr;
+  double vl; // In radians per second
+  double vr; // In radians per second
 };
 
 class DifferentialDrive {
